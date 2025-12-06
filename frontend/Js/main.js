@@ -197,7 +197,7 @@ function renderCourse(course) {
             <div>
                 <i class="fa-solid fa-book-open"></i>
                 <h2>${course.name} <br>
-                    <small style="font-size: 12px; color: #777;">${course.semester}</small>
+                    <small style="font-size: 12px; color: #777;">Semester: ${course.semester}</small>
                 </h2>
             </div>
             <i class="fa-solid fa-trash delete-course-btn" style="cursor:pointer; color: #ff6b6b;"></i>
