@@ -1,268 +1,620 @@
+/* --- Global Reset & Variables --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 :root {
-    --main-transition : 0.3s;
-    --active-color:#4caf5033;
-    --active-bg-color: #6ce706;
-    --borderRadius:8px ;
+    --main-transition: 0.3s ease;
+    --active-color: #e8f5e9;       /* Light Green background */
+    --active-border: #4679805f;/*#7fbdcc64*/     /* Bright Green border */
+    --primary-gradient: linear-gradient(135deg, #40e0d0, #228b22);
+    --delete-color: #ff6b6b;       /* Red for delete icons */
+    --text-color: #333;
+    --border-radius: 12px;
+    --shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
+
 body {
-    font-family: Helvetica, sans-serif;
-    background:#f7f7f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f7f7f8;
+    
+    /* STICKY FOOTER MAGIC STARTS HERE */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
 }
+
 .container {
-    padding: 30px;
-}
-.container .title {
-    width: 650px;
+    flex: 1; 
+    padding: 40px 20px;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
+}
+
+/* --- Header Section --- */
+.title {
+    max-width: 700px;
+    margin: 0 auto 50px auto;
     text-align: center;
 }
+
 .title h1 {
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 40px;
-    margin-bottom: 10px;
+    font-weight: 800;
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #2c3e50;
 }
+
 .title p {
-    color: #777;
-    margin: 0 30px;
-    line-height: 1.5;
+    color: #666;
+    line-height: 1.6;
+    font-size: 16px;
 }
+
+
+/* --- Cards Grid Layout --- */
 .cards-box {
-    margin: 60px 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
 }
-@media (max-width: 479px) {
-  /* CSS للموبايلات الصغيرة */
-    .title {
-        max-width: 330px;
-        h1 {
-            font-size: 22px;
-        }
-        p {
-            font-size: 16px;
-        }
-    }
-    .card {
-        font-size: 16px;
-    }
-}
-@media (min-width: 480px) and (max-width: 767px) {
-  /* CSS للموبايلات العادية */
-  .cards-box .card {
-    width: 100%;
-  }
-  .title {
-        max-width: 480px;
-        h1 {
-            font-size: 25px;
-        }
-        p {
-            font-size: 16px;
-        }
-    }
-    .card {
-        font-size: 16px;
-    }
-}
-.cards-box .card {
+
+/* --- Individual Card Styling --- */
+.card {
     background-color: #fff;
-    box-shadow: 0 5px 20px rgba(0,0,0,.12);
-    padding: 20px;
-    border-radius: var(--borderRadius);
-    align-self: flex-start;
-    .card-head {
-        display: flex;
-        margin-bottom: 20px;
-    }
+    box-shadow: var(--shadow);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+    position: relative;
 }
-.card .card-head{
-    & > i{
-        font-size: 40px;
-        padding: 5px;
-        margin-right: 5px;
-        color: #fff;
-        background:linear-gradient(90deg,green, blue) ;
-        border-radius: 15px;
-        line-height: 40px;
-    }
-    h2 {
-        text-transform: capitalize; 
-        font-weight: normal;
-        i {
-            font-size: 18px;
-        }
-        span {
-            font-size: 14px;
-            font-weight: normal;
-            color: #333;
-            text-transform: lowercase;
-        }
-    }
+
+.card:hover {
+    transform: translateY(-5px);
 }
-.cards-box .assignment {
-    margin: 20px 0;
-    padding: 15px;
-    border-left:3px solid var(--active-bg-color) ;
-    background-color:  var(--active-color);
-    border-radius: var(--borderRadius);
-    h3 {
-        margin-bottom: 10px;
-        font-weight: normal;
-        text-transform: capitalize;
-        i{
-            color:  rgba(79, 236, 79, 0.699);
-            margin-right: 5px;
-        }
-        span {
-            float: right;
-            font-size: 12px;
-            color: var(--active-bg-color);
-        }
-    }
-    .time {
-        display: flex;
-        width: 50%;
-        justify-content: space-between;
-        font-size: 13px;
-        i{
-            font-size: 10px;
-            margin-right: 3px;
-        }
-    }
+
+/* Card Header */
+.card-head {
+    display: flex;
+    justify-content: space-between; /* Pushes text left, trash icon right */
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
 }
-.cards-box .card .add-assign {
-    width: 100%;
-    padding:10px;
-    border: 1px dashed gray;
-    border-radius: var(--borderRadius);
-    background-color: #fff;
-    font-size: 15px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: var(--main-transition);
+
+.card-head > div {
+    display: flex;
+    align-items: center;
 }
-.cards-box .card .add-assign:hover {
-    background-color: #e0e0e0;
-}
-.container .add-course {
-    width: 240px;
-    padding: 10px 30px;
-    border-radius: var(--borderRadius);
-    font-weight: 900;
-    font-size: 18px;
+
+.card-head i.fa-book-open {
+    font-size: 24px;
+    padding: 10px;
+    margin-right: 15px;
     color: #fff;
-    background: linear-gradient(90deg,#40e0d0, #228b22);
-    border: 0;
-    outline: 0;
-    margin: 30px calc(50% - 120px);
+    background: var(--primary-gradient);
+    border-radius: 10px;
+}
+
+.card-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.card-head small {
+    display: block;
+    margin-top: 4px;
+    font-weight: normal;
+}
+
+/* Delete Icon for Course */
+.delete-course-btn {
+    font-size: 16px;
+    padding: 5px;
+    opacity: 0.6;
+    transition: var(--main-transition);
+}
+
+.delete-course-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* --- Assignment Item Styling --- */
+.assignments-container {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.assignment {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-left: 4px solid var(--active-border);
+    background-color: var(--active-color);
+    border-radius: 8px;
+    display: flex; /* Flex to separate text from trash icon */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assign-details h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.assign-details p{
+    color: #333333e1;
+    padding-bottom: 3px;
+}
+
+.assign-details h3 i {
+    color: #030303;
+    margin-right: 8px;
+    font-size: 14px;
+}
+.status-overdue { background-color: #f8b2b2ff; }
+.status-due-today { background-color: #f7e8b5ff; }
+.status-upcoming { background-color: #3bf67dff; }
+
+.assign-details .time {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    gap: 15px;
+}
+
+/* Delete Icon for Assignment */
+.delete-assign-btn {
+    opacity: 0; /* Hidden until hover */
+    transition: var(--main-transition);
+    padding: 8px;
+}
+
+.assignment:hover .delete-assign-btn {
+    opacity: 1;
+}
+
+.delete-assign-btn:hover {
+    transform: scale(1.2);
+}
+
+/* --- Buttons --- */
+/* "Add Assignment" Button inside card */
+.add-assign-btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+    background-color: transparent;
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
     cursor: pointer;
     transition: var(--main-transition);
+}
+
+.add-assign-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #666;
+    color: #000;
+}
+
+/* Fixed "Add Course" Button */
+.add-course {
     position: fixed;
-    bottom: 0;
+    bottom: 30px;
+    left: 85%;
+    transform: translateX(-50%);
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    background: var(--primary-gradient);
+    border: 0;
+    box-shadow: 0 10px 20px rgba(34, 139, 34, 0.4);
+    cursor: pointer;
+    transition: var(--main-transition);
+    z-index: 90;
 }
-.container .add-course:hover {
-    transform: scale(1.03);
+
+.add-course:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 15px 25px rgba(34, 139, 34, 0.5);
 }
-/* Overlay  */
+
+/* --- Popups & Overlay --- */
 #overlay {
     position: fixed;
+    top: 0;
     left: 0;
-    top:0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,.9);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
     display: none;
     z-index: 100;
 }
-/* Popups  */
+
 .add-popup {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     background: #fff;
-    padding: 20px;
-    border-radius: var(--borderRadius);
+    padding: 30px;
+    border-radius: var(--border-radius);
     z-index: 101;
-    box-shadow: 0 5px 20px rgba(0,0,0,.15);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
     display: none;
 }
-@media (max-width: 479px) {
-    .container .add-course {
-        width: 200px;
-    }
-    .add-popup {
-        width: 90%;
-    }
-    .add-popup h2 {
-        font-size: 18px;
-    }
-}
-.popup {
-    display: block;
-}
-.add-popup .course-head ,
-.add-popup .assign-head {
+
+.course-head, .assign-head {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    align-items: center;
+    margin-bottom: 25px;
 }
-.add-popup label {
-    font-size: 14px;
+
+.course-head h2, .assign-head h2 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    color: #999;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: var(--delete-color);
+}
+
+/* Form Elements */
+form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+    background-color: #fafafa;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #228b22;
+    background-color: #fff;
+}
+
+.btns {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btns button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btns .cancel {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.btns .cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.btns .add, .btns .assignment-addBtn {
+    background: var(--primary-gradient);
+    color: #fff;
+}
+
+.btns .add:hover, .btns .assignment-addBtn:hover {
+    opacity: 0.9;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 480px) {
+    .title h1 {
+        font-size: 28px;
+    }
+    
+    .add-popup {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .add-course {
+        width: 50%;
+        bottom: 30px;
+        
+    }
+
+        .navbar {
+        /* Reduce padding for tighter fit */
+        padding: 10px 15px; 
+        /* Allow the brand and links to stack/wrap */
+        flex-direction: column;
+        align-items: flex-start; /* Align logo to the left */
+    }
+
+    .nav-brand {
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        /* Ensure the links section takes full width */
+        width: 100%;
+        /* Change alignment to justify the space for better fit */
+        justify-content: space-between; 
+        flex-wrap: wrap; /* Allows elements to wrap if needed */
+    }
+
+    /* Adjust sizing and margins for smaller elements */
+    #welcome-msg, .semester-dropdown, .logout-btn {
+        margin: 5px 0; /* Add vertical margin to separate stacked items */
+        /* Make selection menu slightly larger for tapping */
+        padding: 10px 15px; 
+    }
+    
+    /* Ensure the welcome message doesn't push elements too far */
+    #welcome-msg {
+        order: 1; /* Place welcome message first in the flex container */
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    
+    .semester-dropdown {
+        order: 2; /* Place semester dropdown next */
+        flex-grow: 1; /* Allow dropdown to take available width */
+        margin-right: 10px;
+    }
+
+    .logout-btn {
+        order: 3; /* Place logout button last */
+        margin-left: 0; /* Remove left margin */
+    }
+
+    /* Fixed "Add Course" Button adjustment for mobile visibility */
+    .add-course {
+        left: 50%; /* Move closer to the edge */
+        bottom: 10px; /* Move closer to the bottom */
+        padding: 12px 20px; /* Make button smaller */
+        font-size: 14px; /* Reduce font size */
+        white-space: nowrap; /* Prevent text wrap */
+        box-shadow: 0 8px 15px rgba(34, 139, 34, 0.5);
+    }
+}
+
+/* --- Semester Selection Menu Style --- */
+.semester-dropdown {
+    /* Style for the select element itself */
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 2px solid #228b22; /* Matches your brand color */
+    color: #228b22;
+    background-color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px; /* Adjusted margin */
+    outline: none;
+    transition: all 0.3s ease;
+    
+    /* Remove default arrow in some browsers for cleaner look */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23228b22%22%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 25px; /* Make space for the custom arrow */
+}
+
+.semester-dropdown:hover {
+    background-color: #f0f9f0;
+}
+
+/* --- Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex; /* Keep nav-links items in a row */
+    align-items: center;
+}
+#welcome-msg {
+    /* Style the text */
+    font-size: 16px;
+    font-weight: 600;
+    color: #333; /* Dark gray for good contrast */
+    margin-right: 20px;
+    
+    /* Add a subtle visual element (optional background or border) */
+    padding: 5px 10px;
+    border-radius: 15px; /* Pill shape */
+    
+    /* Subtle background to make it stand out against the white navbar */
+    background-color: #f0f9f0; /* Very light green (matches the dropdown hover) */
+    
+    /* Add a thin border using the theme color */
+    border: 1px solid #c8e6c9; /* Lighter shade of your brand green */
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 20px;
+    color: #228b22;
+}
+
+.nav-logo {
+    /* border-radius: 50%; */
+    margin-right: 10px;
+    width: 40px;
+    height: 45px;
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.logout-btn:hover {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* --- Auth Pages (Login/Signup) --- */
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7f7f8;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-bottom: 20px;
     color: #333;
 }
-.add-popup input {
-    height: 43px;
+
+.logo-placeholder img {
+    /* border-radius: 50%; */
+    width: 100px;
+    height: 105px;
+    margin-bottom: 20px;
+}
+
+.auth-btn {
     width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #40e0d0, #228b22);
+    color: white;
+    border: none;
+    border-radius: 8px;
     font-size: 16px;
-    border-radius: var(--borderRadius);
-    border: 0;
-    padding: 10px;
-    margin: 10px 0 25px;
-    outline: 0;
-    border: 1px solid #ddd;
-}
-.add-popup input:focus {
-    outline:1px solid #000 ;
-}
-.add-popup .btns {
-    display: flex;
-    gap: 10px;
-}
-.add-popup .btns button {
-    padding: 10px 20px;
-    border: 0;
-    border-radius: var(--borderRadius);
-    transition: var(--main-transition);
     cursor: pointer;
+    margin-top: 10px;
 }
-.add-popup .btns .cancel,
-.add-popup .btns .cancelAS {
-    flex: 1;
-    border: 1px solid #ddd;
-}
-.add-popup .btns .add ,
-.add-popup .btns .assignment-addBtn{
-    flex: 1;
-    background: linear-gradient(90deg,green, blue);
-    cursor: pointer;
-}
-.assignment-popup h2 > i  {
-    background: linear-gradient(135deg,green, blue);
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: var(--borderRadius);
+
+/* --- Footer --- */
+/* 3. Footer Styling */
+.footer {
+    background-color: #2c3e50;
     color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: auto; /* Ensures it pushes to bottom if flex breaks */
+    width: 100%;
+}
+
+.footer img {
+    /* border-radius: 50%; */
+    margin-bottom: 15px;
+    width: 50px;
+    height: 55px;
+}
+
+.footer p {
+    margin-bottom: 10px;
     font-size: 14px;
-    margin-right: 10px;
+    opacity: 0.8;
+}
+
+.socials {
+    margin: 20px 0;
+}
+
+.socials i {
+    font-size: 24px; /* Made slightly larger */
+    margin: 0 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.socials i:hover {
+    color: #40e0d0;
+    transform: translateY(-3px); /* Adds a little pop effect */
+}
+/* Add this to your main CSS file */
+.developers-container {
+    display: flex;
+    justify-content: space-around; /* Distributes the two developer sections */
+    gap: 30px; /* Space between the columns */
+    padding: 15px 0;
+    width: 80%;
+    margin: 0 auto;
+    border-top: 1px solid #ccc; /* Optional separator */
+    border-bottom: 1px solid #ccc;
+}
+
+.developer-info {
+    text-align: center;
+}
+
+.developer-info h3 {
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.developer-info .socials a {
+    margin: 0 5px;
+    font-size: 1.2em;
 }

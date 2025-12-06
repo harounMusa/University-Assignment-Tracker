@@ -1,267 +1,287 @@
-// All Variables
-let addCoursePopUp = document.getElementById("course-popup"); // Course popup
-let addAssignPopUp = document.getElementById("assignment-popup"); // Assign popup
-let overlay = document.getElementById("overlay");
-let cardsContaier = document.querySelector(".cards-box"); // Courses Container
+// --- Configuration ---
+const API_URL = "http://127.0.0.1:5000";
 
-// inputs For Course
-let courseName = document.getElementById("course-name");
-let semster = document.getElementById("semester");
+// --- DOM Elements ---
+const overlay = document.getElementById("overlay");
+const coursePopup = document.getElementById("course-popup");
+const assignPopup = document.getElementById("assignment-popup");
+const cardsContainer = document.querySelector(".cards-box");
+const semesterSelect = document.getElementById('semester-select');
 
-// inputs For Assignments
-let assignName = document.getElementById("assign-name");
-let startdate = document.getElementById("start-date");
-let deadline = document.getElementById("end-date");
+const courseForm = document.getElementById("course-form");
+const assignForm = document.getElementById("assign-form");
 
-let currentCard = null;
+// State Variable to track which course we are adding an assignment to
+let currentCourseId = null; 
 
-// To Cancel Adding Course
-document.querySelector(".course-head > i").onclick = _ => cancel();
-document.querySelector(".cancel").onclick = _ => cancel();
-
-document.querySelector(".cancelAS").onclick = _ => cancelAS();
-document.querySelector(".assign-head > i").onclick = _ => cancelAS();
-
-<<<<<<< HEAD
-// Show course popup
-document.querySelector('.add-course').addEventListener("click", () => showCoursePopup());
-document.querySelector(".add").addEventListener("click", () => addOneCourse());
-document.querySelector(".assignment-addBtn").addEventListener("click", () => addAssign());
-=======
-//show course popup
-document.querySelector('.add-course').addEventListener("click",() => showCoursePopup());
-// document.querySelector(".add").addEventListener( "click",() => addOneCourse());
->>>>>>> 719266891ce434dede008d54bf579c6e9b0e8169
-
-// Functions
-
-<<<<<<< HEAD
-// Create Popup Course Function 
-function showCoursePopup() {
-=======
-function fetchFn(){
-    fetch('http://127.0.0.1:5000/courses')
-    .then(res => res.json())
-    .then(data => {
-        // console.log('Course:', data[0]['name']);
-        data.forEach(course  => {
-            addOneCourse(course.name,course.semester);
-        });
-    })
-    .catch(err => console.error('Error fetching courses:', err));
-}
-window.onload = () => {
-    addOneCourse();
-    fetchFn();
+// --- Event Listeners ---
+if (semesterSelect) {
+    semesterSelect.addEventListener('change', (e) => {
+        const selectedSemester = e.target.value;
+        loadData(selectedSemester);
+    });
 }
 
-//functions
-//Create Popup Course Function 
-function showCoursePopup(){
-    // console.log("hello");
->>>>>>> 719266891ce434dede008d54bf579c6e9b0e8169
-    overlay.style.display = "block";
-    addCoursePopUp.style.display = 'block';
-}
-
-// Create Popup Assignment
-function showAssignPopup() {
-    overlay.style.display = "block";
-    addAssignPopUp.style.display = 'block';
-}
-
-function cancel() {
-    addCoursePopUp.style.display = 'none';
-    overlay.style.display = "none";
-}
-
-function cancelAS() {
-    addAssignPopUp.style.display = 'none';
-    overlay.style.display = "none";
-}
-<<<<<<< HEAD
-
-// Add course
-function addOneCourse() {
-=======
-// localStorage.clear();
-//add course
-function addOneCourse(name,semester){
->>>>>>> 719266891ce434dede008d54bf579c6e9b0e8169
-    if (courseName.value && semster.value) {
-        let courseCard = document.createElement("div");
-        let testContainer = document.createElement('div');
-        let btn = document.createElement('button');
-        courseCard.className = 'card';
-        testContainer.className = 'assignments';
-        btn.innerHTML = '+ Add Assignment';
-        btn.className = "add-assign";
-        courseCard.innerHTML = `
-<<<<<<< HEAD
-            <div class="card-head">
-                <i class="fa-solid fa-book-open"></i>
-                <h2>${courseName.value}<br><i style="margin-right:10px;" class="fa-regular fa-calendar"></i><span>${semster.value}</span></h2>
-            </div>
-=======
-                <div class="card-head">
-                    <i class=a"fa-solid fa-book-open"></i>
-                    <h2>${name}<br><i style="margin-right:10px;" class="fa-regular fa-calendar"></i><span>${semester}</span></h2>
-                </div>
->>>>>>> 719266891ce434dede008d54bf579c6e9b0e8169
-        `;
-        courseCard.appendChild(testContainer);
-        btn.addEventListener("click", () => {
-            currentCard = courseCard;
-            showAssignPopup();
-        });
-        courseCard.appendChild(btn);
-        cardsContaier.appendChild(courseCard);
-    }
-    cancel();
-    saveData();   
-    courseName.value = "";
-    semster.value = "";
-}
-
-// Add assignment 
-function addAssign() {
-    if (assignName.value && startdate.value && deadline.value) {
-        let assignment = document.createElement("div");
-        assignment.className = "assignment";
-        assignment.innerHTML = `
-            <h3><i class="fa-regular fa-clock"></i>${assignName.value} <span>Active</span></h3>
-            <div class="time">
-                <span><i class="fa-regular fa-calendar"></i>${startdate.value}</span>
-                <span><i class="fa-regular fa-calendar"></i>${deadline.value}</span>
-            </div>`;
-        let assignContainer = currentCard.querySelector(".assignments");
-        if (!assignContainer) {
-            assignContainer = document.createElement("div");
-            assignContainer.className = "assignments";
-            currentCard.insertBefore(assignContainer, currentCard.querySelector("button"));
-        }
-        assignContainer.appendChild(assignment);
-    } else {
-        console.log("error");
-    }
-    assignName.value = "";
-    startdate.value = "";
-    deadline.value = "";
-    cancelAS();
-    saveData(); 
-}
-
-document.addEventListener("click", (e) => {
-    if (e.target.className == "add-assign") {
-        overlay.style.display = "block";
-        addAssignPopUp.style.display = 'block';
-    }
+// Open Course Popup
+document.querySelector('.add-course').addEventListener("click", () => {
+    courseForm.reset();
+    openPopup(coursePopup);
 });
 
-function rebindAssignButtons() {
-    document.querySelectorAll('.add-assign').forEach(btn => {
-        btn.addEventListener("click", () => {
-            currentCard = btn.closest(".card");
-            showAssignPopup();
-        });
-    });
+// Close Popups (X buttons and Cancel buttons)
+document.querySelectorAll('.close-btn, .cancel').forEach(btn => {
+    btn.addEventListener('click', closeAllPopups);
+});
+
+// Handle Course Form Submit
+courseForm.addEventListener("submit", async (e) => {
+    e.preventDefault(); // Stop page reload
+    
+    const courseData = {
+        name: document.getElementById("course-name").value,
+        semester: document.getElementById("semester").value
+    };
+
+    await createCourse(courseData);
+});
+
+// Handle Assignment Form Submit
+assignForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    if (!currentCourseId) return alert("Error: No course selected");
+
+    // Format dates to ISO string for Python (YYYY-MM-DD)
+    const startDateInput = document.getElementById("start-date").value;
+    const dueDateInput = document.getElementById("end-date").value;
+
+    const assignData = {
+        course_id: currentCourseId,
+        title: document.getElementById("assign-name").value,
+        description: document.getElementById("assign-description").value,
+        start_date: startDateInput, 
+        due_date: dueDateInput
+    };
+
+    await createAssignment(assignData);
+});
+
+// --- API Functions ---
+window.onload = () => {
+    loadData(); // Load all by default
+};
+
+// Helper to refresh the board based on semester
+async function loadData(semester = null) {
+    cardsContainer.innerHTML = ''; // Clear the UI
+    
+    // We must await courses first, so the cards exist before we try to put assignments in them
+    await fetchCourses(semester); 
+    await fetchAssignments();
 }
 
-// ====================
-// ✅ New: SAVE DATA to backend
-// ====================
-async function saveData() {
-    const courses = [];
-    document.querySelectorAll('.card').forEach(card => {
-        const courseName = card.querySelector('.card-head h2').childNodes[0].nodeValue.trim();
-        const semester = card.querySelector('.card-head span').innerText.trim();
-
-        const assignments = [];
-        card.querySelectorAll('.assignment').forEach(assignEl => {
-            const assignName = assignEl.querySelector('h3').childNodes[1].nodeValue.trim();
-            const startDate = assignEl.querySelectorAll('.time span')[0].innerText.replace(/^\D*/, '').trim();
-            const endDate = assignEl.querySelectorAll('.time span')[1].innerText.replace(/^\D*/, '').trim();
-
-            assignments.push({
-                assignName,
-                startDate,
-                endDate
-            });
-        });
-
-        courses.push({
-            courseName,
-            semester,
-            assignments
-        });
-    });
-
+// 2. Fetch and Render Courses
+async function fetchCourses(semester = null) {
     try {
-        await fetch('data.json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(courses)
-        });
-        console.log('Data saved to server');
-    } catch (error) {
-        console.error('Error saving data:', error);
+        // Build URL: if semester is present, add ?semester=X
+        let url = `${API_URL}/courses`;
+        if (semester) {
+            url += `?semester=${semester}`;
+        }
+
+        const res = await fetch(url);
+        const courses = await res.json();
+        
+        if (courses.length === 0) {
+            cardsContainer.innerHTML = '<p style="text-align:center; width:100%; margin-top:20px;">No courses found for this semester.</p>';
+        } else {
+            courses.forEach(course => renderCourse(course));
+        }
+    } catch (err) {
+        console.error("Error loading courses:", err);
     }
 }
 
-// ====================
-// ✅ New: LOAD DATA from backend
-// ====================
-async function showTask() {
+// 3. Fetch and Render Assignments
+async function fetchAssignments() {
     try {
-        const response = await fetch('data.json');
-        const courses = await response.json();
-
-        cardsContaier.innerHTML = '';
-
-        courses.forEach(course => {
-            const courseCard = document.createElement("div");
-            const testContainer = document.createElement('div');
-            const btn = document.createElement('button');
-            courseCard.className = 'card';
-            testContainer.className = 'assignments';
-            btn.innerHTML = '+ Add Assignment';
-            btn.className = "add-assign";
-
-            courseCard.innerHTML = `
-                <div class="card-head">
-                    <i class="fa-solid fa-book-open"></i>
-                    <h2>${course.courseName}<br><i style="margin-right:10px;" class="fa-regular fa-calendar"></i><span>${course.semester}</span></h2>
-                </div>
-            `;
-
-            course.assignments.forEach(assignment => {
-                const assignmentEl = document.createElement("div");
-                assignmentEl.className = "assignment";
-                assignmentEl.innerHTML = `
-                    <h3><i class="fa-regular fa-clock"></i>${assignment.assignName} <span>Active</span></h3>
-                    <div class="time">
-                        <span><i class="fa-regular fa-calendar"></i>${assignment.startDate}</span>
-                        <span><i class="fa-regular fa-calendar"></i>${assignment.endDate}</span>
-                    </div>`;
-                testContainer.appendChild(assignmentEl);
-            });
-
-            courseCard.appendChild(testContainer);
-            btn.addEventListener("click", () => {
-                currentCard = courseCard;
-                showAssignPopup();
-            });
-            courseCard.appendChild(btn);
-            cardsContaier.appendChild(courseCard);
+        const res = await fetch(`${API_URL}/assignments`);
+        const assignments = await res.json();
+        
+        assignments.forEach(assign => {
+            renderAssignment(assign);
         });
-
-        rebindAssignButtons();
-    } catch (error) {
-        console.error('Error loading data:', error);
+    } catch (err) {
+        console.error("Error loading assignments:", err);
     }
 }
 
-// Initial load
-showTask();
+// 4. Create Course (POST)
+async function createCourse(data) {
+    try {
+        const res = await fetch(`${API_URL}/courses`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            const newCourse = await res.json();
+            renderCourse(newCourse); // Add to UI immediately
+            closeAllPopups();
+        } else {
+            alert("Failed to create course");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// 5. Create Assignment (POST)
+async function createAssignment(data) {
+    try {
+        const res = await fetch(`${API_URL}/assignments`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            const newAssign = await res.json();
+            renderAssignment(newAssign); // Add to UI immediately
+            closeAllPopups();
+        } else {
+            const err = await res.json();
+            alert("Error: " + (err.message || "Failed to add assignment"));
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// 6. Delete Course
+async function deleteCourse(id, cardElement) {
+    if(!confirm("Delete this course and all its assignments?")) return;
+
+    try {
+        const res = await fetch(`${API_URL}/course/${id}`, { method: "DELETE" });
+        if (res.ok) {
+            cardElement.remove();
+        }
+    } catch (err) { console.error(err); }
+}
+
+// 7. Delete Assignment
+async function deleteAssignment(id, assignElement) {
+    if(!confirm("Delete this assignment?")) return;
+
+    try {
+        const res = await fetch(`${API_URL}/assignments/${id}`, { method: "DELETE" });
+        if (res.ok) {
+            assignElement.remove();
+        }
+    } catch (err) { console.error(err); }
+}
+
+
+// --- UI Rendering Helper Functions ---
+
+function renderCourse(course) {
+    const courseCard = document.createElement("div");
+    courseCard.className = 'card';
+    // IMPORTANT: Store the ID in the HTML so we can find it later
+    courseCard.dataset.id = course.id; 
+
+    courseCard.innerHTML = `
+        <div class="card-head">
+            <div>
+                <i class="fa-solid fa-book-open"></i>
+                <h2>${course.name} <br>
+                    <small style="font-size: 12px; color: #777;">${course.semester}</small>
+                </h2>
+            </div>
+            <i class="fa-solid fa-trash delete-course-btn" style="cursor:pointer; color: #ff6b6b;"></i>
+        </div>
+        <div class="assignments-container"></div>
+        <button class="add-assign-btn">+ Add Assignment</button>
+    `;
+
+    // Add Event Listener for "Add Assignment" button on this specific card
+    courseCard.querySelector(".add-assign-btn").addEventListener("click", () => {
+        currentCourseId = course.id; // REMEMBER THIS ID
+        assignForm.reset();
+        openPopup(assignPopup);
+    });
+
+    // Add Delete Listener
+    courseCard.querySelector(".delete-course-btn").addEventListener("click", () => {
+        deleteCourse(course.id, courseCard);
+    });
+
+    cardsContainer.appendChild(courseCard);
+}
+
+function renderAssignment(assign) {
+    // Find the course card that matches the course_id
+    const courseCard = document.querySelector(`.card[data-id='${assign.course_id}']`);
+    
+    // SAFETY CHECK: If we filtered the courses (e.g. showing Sem 1), 
+    // but this assignment belongs to Sem 2, courseCard will be null.
+    // We simply return and don't render it.
+    if (!courseCard) return; 
+
+    const container = courseCard.querySelector(".assignments-container");
+    const assignEl = document.createElement("div");
+    
+    // ... (Rest of your renderAssignment logic remains exactly the same) ...
+    assignEl.className = "assignment";
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    const dueDate = new Date(assign.due_date);
+    dueDate.setHours(0, 0, 0, 0);
+
+    let bgColor = "";
+    if (today.getTime() > dueDate.getTime()) {
+        bgColor = "#f8b2b2ff"; 
+    } else if (today.getTime() === dueDate.getTime()) {
+        bgColor = "#f7e8b5ff"; 
+    } else {
+        bgColor = "#afffcbff"; 
+    }
+
+    assignEl.style.backgroundColor = bgColor;
+    assignEl.style.borderRadius = "5px";
+    assignEl.style.padding = "10px";
+
+    assignEl.innerHTML = `
+        <div class="assign-details">
+            <h3><i class="fa-regular fa-clock"></i> ${assign.title}</h3>
+            <p>${assign.description}</p>
+            <div class="time">
+                <span>Start: ${assign.start_date}</span>
+                <span>Due: ${assign.due_date}</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-trash delete-assign-btn" style="cursor:pointer; color: #ff6b6b; margin-left:10px;"></i>
+    `;
+
+    assignEl.querySelector(".delete-assign-btn").addEventListener("click", () => {
+        deleteAssignment(assign.id, assignEl);
+    });
+
+    container.appendChild(assignEl);
+}
+
+// --- Popup Helpers ---
+function openPopup(element) {
+    overlay.style.display = "block";
+    element.style.display = 'block';
+}
+
+function closeAllPopups() {
+    overlay.style.display = "none";
+    coursePopup.style.display = 'none';
+    assignPopup.style.display = 'none';
+    currentCourseId = null; // Reset ID
+}

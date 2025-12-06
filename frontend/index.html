@@ -1,63 +1,133 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Uni Tracker</title>
     <link rel="stylesheet" href="./Css/style.css">
     <script src="https://kit.fontawesome.com/3d59e7110b.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="C:\Users\user\Pictures\Sudan_University_for_Scince_&_Technology.png" alt="Logo" class="nav-logo">
+            <span>Uni Tracker</span>
+        </div>
+        <div class="nav-links">
+            <span id="welcome-msg">Hello, Student</span>
+            <select id="semester-select" class="semester-dropdown">
+                <option value="" disabled selected>Select Semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="title">
-            <h1>University Assignment Tracker </h1>
-            <p>Keep track of all your course assignment in one organized place. Never miss a deadline again.</p>
+            <h1>University Assignment Tracker</h1>
+            <p>Keep track of all your course assignments in one organized place.</p>
         </div>
 
-        <!-- Course Popup -->
-         <div class="add-popup" id="course-popup">
-                <div id="course-head" class="course-head">
-                    <h2><i class="fa-solid fa-book-open" style="margin-right: 10px;"></i>Add New Course</h2>
-                    <i class="fa-solid fa-xmark"></i>
+            <div class="add-popup" id="course-popup">
+            <div class="course-head">
+                <h2><i class="fa-solid fa-book-open" style="margin-right: 10px;"></i>Add New Course</h2>
+                <i class="fa-solid fa-xmark close-btn"></i>
+            </div>
+            <form id="course-form">
+                <label for="course-name">Course Name</label>
+                <input name="name" required type="text" id="course-name" placeholder="e.g., Computer Science">
+                
+                <label for="semester">Semester</label>
+                <input name="semester" required type="number" id="semester" placeholder="e.g., 3">
+                
+                <div class="btns">
+                    <button type="button" class="cancel">Cancel</button>
+                    <button type="submit" class="add">Add Course</button>
                 </div>
-                <form action="" class="course-form">
-                    <label for="course-name">Course Name</label>
-                    <input name="course-name" required type="text" id="course-name" placeholder="e.g., Computer Scince Fundamentals">
-                    <label for="semester">Semester</label>
-                    <input name="semester" required type="text" id="semester" placeholder="e.g., Fall 2025">
-                    <div class="btns">
-                        <button type="button" id="cancel" class="cancel">Cancel</button>
-                        <button type="button" class="add">Add Course</button>
-                    </div>
-                </form>
-         </div>
+            </form>
+        </div>
 
-         <!-- Assignment Popup  -->
-         <div class="add-popup" id="assignment-popup">
-                <div class="assign-head">
-                    <h2><i class="fa-solid fa-plus" style="margin-right: 10px; display: inline-block;"></i>Add New Assignment</h2>
-                    <i class="fa-solid fa-xmark"></i>
+                <div class="add-popup" id="assignment-popup">
+            <div class="assign-head">
+                <h2><i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Add New Assignment</h2>
+                <i class="fa-solid fa-xmark close-btn"></i>
+            </div>
+            <form id="assign-form">
+                <label for="assign-name">Assignment Title</label>
+                <input name="title" required type="text" id="assign-name" placeholder="e.g., Midterm Project">
+                
+                <label for="assign-description">Description</label>
+                <input name="description" type="text" id="assign-description" placeholder="Optional details">
+                
+                <label for="start-date">Start Date</label>
+                <input name="start_date" required type="date" id="start-date">
+                
+                <label for="end-date">Due Date</label>
+                <input name="due_date" required type="date" id="end-date">
+                
+                <div class="btns">
+                    <button type="button" class="cancel">Cancel</button>
+                    <button type="submit" class="assignment-addBtn">Add Assignment</button>
                 </div>
-                <form action="" class="assign-form">
-                    <label for="assign-name">Assignment Name</label>
-                    <input name="assign-name" required type="text" id="assign-name" placeholder="e.g., Computer Scince Fundamentals">
-                    <label for="start-date">Start Date</label>
-                    <input name="start-date" required type="date" id="start-date" >
-                    <label for="end-date">Due Date</label>
-                    <input name="end-date" required type="date" id="end-date">
-                    <div class="btns">
-                        <button class="cancelAS">Cancel</button>
-                        <button class="assignment-addBtn">Add Assignment</button>
-                    </div>
-                </form>
-         </div>
+            </form>
+        </div>
+
         <div class="cards-box"></div>
-    
-
         <button class="add-course">+ Add Course</button>
-
     </div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <img src="C:\Users\user\Pictures\Sudan_University_for_Scince_&_Technology.png" alt="Sudan Uni Logo">
+        <p>Sudan University for Science and Technology</p>
+        
+        <div class="developers-container">
+            <div class="developer-info">
+                <h3>Front-End Developer: Ibrahim 🧑‍💻</h3>
+                <div class="socials">
+                    <a href="https://github.com/harounMusa" target="_blank" title="Haroun's GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="[FRONTEND_TWITTER_LINK]" target="_blank" title="Haroun's Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="[FRONTEND_LINKEDIN_LINK]" target="_blank" title="Haroun's LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="developer-info">
+                <h3>Back-End Developer: Haroun Musa ⚙️</h3>
+                <div class="socials">
+                    <a href="[BACKEND_GITHUB_LINK]" target="_blank" title="[Name]'s GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="[BACKEND_TWITTER_LINK]" target="_blank" title="[Name]'s Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="[BACKEND_LINKEDIN_LINK]" target="_blank" title="[Name]'s LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <p class="copyright">© 2025 University Tracker. All rights reserved.</p>
+    </div>
+</footer>
     <script src="./Js/main.js"></script>
+    <script>
+        if(!localStorage.getItem('token')) {
+            window.location.href = 'login.html';
+        }
+        document.getElementById('welcome-msg').innerText = 'Hi, ' + (localStorage.getItem('username') || 'Student');
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
