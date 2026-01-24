@@ -12,9 +12,9 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}}, supports_credentials=True)
 # Session Cookie Security for local development
 app.config.update(
-    SESSION_COOKIE_SAMESITE='Lax', # Set to 'None' if using HTTPS and different domains
+    SESSION_COOKIE_SAMESITE=None, 
     SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SECURE=False,   # Set to True only if using HTTPS
+    SESSION_COOKIE_SECURE=True,  
 )
 app.config.from_object(config)
 api = Api(app)
@@ -32,5 +32,5 @@ api.add_resource(AdminLogout, '/admin/logout')
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=False)
 
