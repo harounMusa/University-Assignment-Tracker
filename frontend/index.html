@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +8,7 @@
     <link rel="stylesheet" href="./Css/style.css">
     <script src="https://kit.fontawesome.com/3d59e7110b.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div id="overlay"></div>
 
@@ -21,7 +21,7 @@
             <span id="welcome-msg">Hello, Student</span>
             <select id="semester-select" class="semester-dropdown">
                 <option value="" disabled selected>Select Semester</option>
-                <option value="1">Semester 1</option>
+                <option value="1" selected>Semester 1</option>
                 <option value="2">Semester 2</option>
                 <option value="3">Semester 3</option>
                 <option value="4">Semester 4</option>
@@ -30,7 +30,8 @@
                 <option value="7">Semester 7</option>
                 <option value="8">Semester 8</option>
             </select>
-            <button onclick="logout()" class="logout-btn">Logout</button>
+            <button onclick="logout()" id="logout-btn" class="logout-btn">Logout</button>
+            <button onclick="window.location.href = 'login.html'" id="login-btn" class="login-btn">Login</button>
         </div>
     </nav>
 
@@ -40,7 +41,7 @@
             <p>Keep track of all your course assignments in one organized place.</p>
         </div>
 
-            <div class="add-popup" id="course-popup">
+        <div class="add-popup" id="course-popup">
             <div class="course-head">
                 <h2><i class="fa-solid fa-book-open" style="margin-right: 10px;"></i>Add New Course</h2>
                 <i class="fa-solid fa-xmark close-btn"></i>
@@ -48,10 +49,10 @@
             <form id="course-form">
                 <label for="course-name">Course Name</label>
                 <input name="name" required type="text" id="course-name" placeholder="e.g., Computer Science">
-                
+
                 <label for="semester">Semester</label>
                 <input name="semester" required type="number" id="semester" placeholder="e.g., 3">
-                
+
                 <div class="btns">
                     <button type="button" class="cancel">Cancel</button>
                     <button type="submit" class="add">Add Course</button>
@@ -59,7 +60,7 @@
             </form>
         </div>
 
-                <div class="add-popup" id="assignment-popup">
+        <div class="add-popup" id="assignment-popup">
             <div class="assign-head">
                 <h2><i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Add New Assignment</h2>
                 <i class="fa-solid fa-xmark close-btn"></i>
@@ -67,16 +68,16 @@
             <form id="assign-form">
                 <label for="assign-name">Assignment Title</label>
                 <input name="title" required type="text" id="assign-name" placeholder="e.g., Midterm Project">
-                
+
                 <label for="assign-description">Description</label>
                 <input name="description" type="text" id="assign-description" placeholder="Optional details">
-                
+
                 <label for="start-date">Start Date</label>
                 <input name="start_date" required type="date" id="start-date">
-                
+
                 <label for="end-date">Due Date</label>
                 <input name="due_date" required type="date" id="end-date">
-                
+
                 <div class="btns">
                     <button type="button" class="cancel">Cancel</button>
                     <button type="submit" class="assignment-addBtn">Add Assignment</button>
@@ -85,49 +86,100 @@
         </div>
 
         <div class="cards-box"></div>
-        <button class="add-course">+ Add Course</button>
+        <button class="add-course admin-only">+ Add Course</button>
     </div>
 
-<footer class="footer">
-    <div class="footer-content">
-        <img src="icon/Sudan_University_for_Scince_&_Technology.png" alt="Sudan Uni Logo">
-        <p>Sudan University for Science and Technology</p>
-        
-        <div class="developers-container">
-            <div class="developer-info">
-                <h3>Front-End Developer: Ibrahim 🧑‍💻</h3>
-                <div class="socials">
-                    <a href="https://github.com/harounMusa" target="_blank" title="Haroun's GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="[FRONTEND_TWITTER_LINK]" target="_blank" title="Haroun's Twitter"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="[FRONTEND_LINKEDIN_LINK]" target="_blank" title="Haroun's LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="icon/Sudan_University_for_Scince_&_Technology.png" alt="Sudan Uni Logo">
+            <p>Sudan University for Science and Technology</p>
+
+            <div class="developers-container">
+                <div class="developer-info">
+                    <h3>Front-End Developer: Ibrahim 🧑‍💻</h3>
+                    <div class="socials">
+                        <a href="https://github.com/harounMusa" target="_blank" title="Ibrahim's GitHub"><i
+                                class="fa-brands fa-github"></i></a>
+                        <a href="[FRONTEND_TWITTER_LINK]" target="_blank" title="Ibrahim's Twitter"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="[FRONTEND_LINKEDIN_LINK]" target="_blank" title="Ibrahim's LinkedIn"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="developer-info">
+                    <h3>Back-End Developer: Haroun Musa ⚙️</h3>
+                    <div class="socials">
+                        <a href="https://github.com/harounMusa" target="_blank" title="Haroun's GitHub"><i
+                                class="fa-brands fa-github"></i></a>
+                        <a href="https://x.com/harounnasreldin" target="_blank" title="Haroun's Twitter"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/haroun-musa-1096702b5/" target="_blank"
+                            title="Haroun's LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
                 </div>
             </div>
 
-            <div class="developer-info">
-                <h3>Back-End Developer: Haroun Musa ⚙️</h3>
-                <div class="socials">
-                    <a href="https://github.com/harounMusa" target="_blank" title="Haroun's GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://x.com/harounnasreldin" target="_blank" title="Haroun's Twitter"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="https://www.linkedin.com/in/haroun-musa-1096702b5/" target="_blank" title="Haroun's LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                </div>
-            </div>
+            <p class="copyright">© 2025 University Tracker. All rights reserved.</p>
         </div>
-
-        <p class="copyright">© 2025 University Tracker. All rights reserved.</p>
-    </div>
-</footer>
-    <script src="./Js/main.js"></script>
+    </footer>
+    <script src="./Js/main.js" defer></script>
     <script>
-        if(!localStorage.getItem('token')) {
-            window.location.href = 'login.html';
-        }
-        document.getElementById('welcome-msg').innerText = 'Hi, ' + (localStorage.getItem('username') || 'Student');
+        // API_URL is already defined in main.js
+        API_URL = "http://127.0.0.1:5000";
+
+
+    async function checkAdminStatus() {
+    try {
+        const response = await fetch(`${API_URL}/admin/check`, { credentials: 'include' });
+        const data = await response.json();
         
+        const isAdmin = !!data.is_admin; // Forces a boolean true/false
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // 1. Handle Body Class
+        document.body.classList.toggle('admin', isAdmin);
+
+        // 2. Handle Button Visibility
+        if (isAdmin) {
+            loginBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+            console.log('Logged in as Admin');
+        } else {
+            loginBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+            console.log('Logged in as Student');
+        }
+
+        // 3. Update Welcome Message (Optional but nice)
+        const welcomeMsg = document.getElementById('welcome-msg');
+        if (welcomeMsg) {
+            welcomeMsg.textContent = isAdmin ? "Hello, Admin" : "Hello, Student";
+        }
+
+    } catch (error) {
+        console.error("Auth check failed:", error);
+        // Fallback: assume guest if the server is down
+        document.body.classList.remove('admin');
+    }
+}
+
+        // Call the function
+        checkAdminStatus();
+
         function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            window.location.href = 'login.html';
+            fetch(`${API_URL}/admin/logout`, {
+                method: 'POST',
+                credentials: 'include'
+            }).then(res => {
+                if (res.ok)
+                    location.reload();
+                else
+                    alert('Logout failed');
+            })
         }
     </script>
 </body>
+
 </html>

@@ -1,33 +1,55 @@
-/* --- Global Reset & Variables --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --main-transition: 0.3s ease;
-    --active-color: #e8f5e9;       /* Light Green background */
-    --active-border: #4679805f;/*#7fbdcc64*/     /* Bright Green border */
+    --active-color: #e8f5e9;
+    /* Light Green background */
+    --active-border: #4679805f;
+    /*#7fbdcc64*/
+    /* Bright Green border */
     --primary-gradient: linear-gradient(135deg, #40e0d0, #228b22);
-    --delete-color: #ff6b6b;       /* Red for delete icons */
+    --delete-color: #ff6b6b;
+    /* Red for delete icons */
     --text-color: #333;
     --border-radius: 12px;
-    --shadow: 0 8px 24px rgba(0,0,0,0.1);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f7f7f8;
-    
+
     /* STICKY FOOTER MAGIC STARTS HERE */
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
+    min-height: 100vh;
+}
+
+body:not(.admin) .admin-only {
+    display: none !important;
+}
+ body.admin .admin-only {
+    display: block !important;
+}
+
+.hidden {
+    display: none;
+}
+
+body.admin .hidden {
+    display: block;
 }
 
 .container {
-    flex: 1; 
+    flex: 1;
     padding: 40px 20px;
     max-width: 1200px;
     width: 100%;
@@ -81,14 +103,15 @@ body {
 /* Card Header */
 .card-head {
     display: flex;
-    justify-content: space-between; /* Pushes text left, trash icon right */
+    justify-content: space-between;
+    /* Pushes text left, trash icon right */
     align-items: flex-start;
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
-.card-head > div {
+.card-head>div {
     display: flex;
     align-items: center;
 }
@@ -139,7 +162,8 @@ body {
     border-left: 4px solid var(--active-border);
     background-color: var(--active-color);
     border-radius: 8px;
-    display: flex; /* Flex to separate text from trash icon */
+    display: flex;
+    /* Flex to separate text from trash icon */
     justify-content: space-between;
     align-items: center;
 }
@@ -152,7 +176,7 @@ body {
     align-items: center;
 }
 
-.assign-details p{
+.assign-details p {
     color: #333333e1;
     padding-bottom: 3px;
 }
@@ -162,9 +186,18 @@ body {
     margin-right: 8px;
     font-size: 14px;
 }
-.status-overdue { background-color: #f8b2b2ff; }
-.status-due-today { background-color: #f7e8b5ff; }
-.status-upcoming { background-color: #3bf67dff; }
+
+.status-overdue {
+    background-color: #f8b2b2ff;
+}
+
+.status-due-today {
+    background-color: #f7e8b5ff;
+}
+
+.status-upcoming {
+    background-color: #3bf67dff;
+}
 
 .assign-details .time {
     font-size: 12px;
@@ -175,7 +208,8 @@ body {
 
 /* Delete Icon for Assignment */
 .delete-assign-btn {
-    opacity: 0; /* Hidden until hover */
+    opacity: 0;
+    /* Hidden until hover */
     transition: var(--main-transition);
     padding: 8px;
 }
@@ -257,18 +291,20 @@ body {
     padding: 30px;
     border-radius: var(--border-radius);
     z-index: 101;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     display: none;
 }
 
-.course-head, .assign-head {
+.course-head,
+.assign-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
 }
 
-.course-head h2, .assign-head h2 {
+.course-head h2,
+.assign-head h2 {
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -336,12 +372,14 @@ form input:focus {
     background-color: #e0e0e0;
 }
 
-.btns .add, .btns .assignment-addBtn {
+.btns .add,
+.btns .assignment-addBtn {
     background: var(--primary-gradient);
     color: #fff;
 }
 
-.btns .add:hover, .btns .assignment-addBtn:hover {
+.btns .add:hover,
+.btns .assignment-addBtn:hover {
     opacity: 0.9;
 }
 
@@ -350,7 +388,7 @@ form input:focus {
     .title h1 {
         font-size: 28px;
     }
-    
+
     .add-popup {
         width: 90%;
         padding: 20px;
@@ -359,15 +397,16 @@ form input:focus {
     .add-course {
         width: 50%;
         bottom: 30px;
-        
+
     }
 
-        .navbar {
+    .navbar {
         /* Reduce padding for tighter fit */
-        padding: 10px 15px; 
+        padding: 10px 15px;
         /* Allow the brand and links to stack/wrap */
         flex-direction: column;
-        align-items: flex-start; /* Align logo to the left */
+        align-items: flex-start;
+        /* Align logo to the left */
     }
 
     .nav-brand {
@@ -378,44 +417,69 @@ form input:focus {
         /* Ensure the links section takes full width */
         width: 100%;
         /* Change alignment to justify the space for better fit */
-        justify-content: space-between; 
-        flex-wrap: wrap; /* Allows elements to wrap if needed */
+        justify-content: space-between;
+        flex-wrap: wrap;
+        /* Allows elements to wrap if needed */
     }
 
     /* Adjust sizing and margins for smaller elements */
-    #welcome-msg, .semester-dropdown, .logout-btn {
-        margin: 5px 0; /* Add vertical margin to separate stacked items */
+    #welcome-msg,
+    .semester-dropdown,
+    .logout-btn {
+        margin: 5px 0;
+        /* Add vertical margin to separate stacked items */
         /* Make selection menu slightly larger for tapping */
-        padding: 10px 15px; 
+        padding: 10px 15px;
     }
-    
+
     /* Ensure the welcome message doesn't push elements too far */
     #welcome-msg {
-        order: 1; /* Place welcome message first in the flex container */
+        order: 1;
+        /* Place welcome message first in the flex container */
         width: 100%;
         margin-bottom: 10px;
         font-size: 14px;
     }
-    
+
     .semester-dropdown {
-        order: 2; /* Place semester dropdown next */
-        flex-grow: 1; /* Allow dropdown to take available width */
+        order: 2;
+        /* Place semester dropdown next */
+        flex-grow: 1;
+        /* Allow dropdown to take available width */
         margin-right: 10px;
     }
 
     .logout-btn {
-        order: 3; /* Place logout button last */
-        margin-left: 0; /* Remove left margin */
+        order: 3;
+        /* Place logout button last */
+        margin-left: 0;
+        /* Remove left margin */
     }
 
     /* Fixed "Add Course" Button adjustment for mobile visibility */
     .add-course {
-        left: 50%; /* Move closer to the edge */
-        bottom: 10px; /* Move closer to the bottom */
-        padding: 12px 20px; /* Make button smaller */
-        font-size: 14px; /* Reduce font size */
-        white-space: nowrap; /* Prevent text wrap */
+        left: 50%;
+        /* Move closer to the edge */
+        bottom: 10px;
+        /* Move closer to the bottom */
+        padding: 12px 20px;
+        /* Make button smaller */
+        font-size: 14px;
+        /* Reduce font size */
+        white-space: nowrap;
+        /* Prevent text wrap */
         box-shadow: 0 8px 15px rgba(34, 139, 34, 0.5);
+    }
+
+    .auth-card {
+        width: 90%;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .logo-placeholder img {
+        width: 80px;
+        height: 85px;
     }
 }
 
@@ -424,15 +488,17 @@ form input:focus {
     /* Style for the select element itself */
     padding: 8px 12px;
     border-radius: 20px;
-    border: 2px solid #228b22; /* Matches your brand color */
+    border: 2px solid #228b22;
+    /* Matches your brand color */
     color: #228b22;
     background-color: white;
     font-weight: 600;
     cursor: pointer;
-    margin-right: 10px; /* Adjusted margin */
+    margin-right: 10px;
+    /* Adjusted margin */
     outline: none;
     transition: all 0.3s ease;
-    
+
     /* Remove default arrow in some browsers for cleaner look */
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -440,7 +506,8 @@ form input:focus {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23228b22%22%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-position: right 8px center;
-    padding-right: 25px; /* Make space for the custom arrow */
+    padding-right: 25px;
+    /* Make space for the custom arrow */
 }
 
 .semester-dropdown:hover {
@@ -454,30 +521,36 @@ form input:focus {
     align-items: center;
     padding: 15px 30px;
     background-color: #fff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
 }
 
 .nav-links {
-    display: flex; /* Keep nav-links items in a row */
+    display: flex;
+    /* Keep nav-links items in a row */
     align-items: center;
 }
+
 #welcome-msg {
     /* Style the text */
     font-size: 16px;
     font-weight: 600;
-    color: #333; /* Dark gray for good contrast */
+    color: #333;
+    /* Dark gray for good contrast */
     margin-right: 20px;
-    
+
     /* Add a subtle visual element (optional background or border) */
     padding: 5px 10px;
-    border-radius: 15px; /* Pill shape */
-    
+    border-radius: 15px;
+    /* Pill shape */
+
     /* Subtle background to make it stand out against the white navbar */
-    background-color: #f0f9f0; /* Very light green (matches the dropdown hover) */
-    
+    background-color: #f0f9f0;
+    /* Very light green (matches the dropdown hover) */
+
     /* Add a thin border using the theme color */
-    border: 1px solid #c8e6c9; /* Lighter shade of your brand green */
+    border: 1px solid #c8e6c9;
+    /* Lighter shade of your brand green */
 }
 
 .nav-brand {
@@ -510,6 +583,24 @@ form input:focus {
     color: white;
 }
 
+.login-btn {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
+    transition: var(--main-transition);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(34, 139, 34, 0.4);
+}
+
 /* --- Auth Pages (Login/Signup) --- */
 .auth-container {
     height: 100vh;
@@ -523,7 +614,7 @@ form input:focus {
     background: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -560,7 +651,8 @@ form input:focus {
     color: #fff;
     padding: 40px 20px;
     text-align: center;
-    margin-top: auto; /* Ensures it pushes to bottom if flex breaks */
+    margin-top: auto;
+    /* Ensures it pushes to bottom if flex breaks */
     width: 100%;
 }
 
@@ -582,7 +674,8 @@ form input:focus {
 }
 
 .socials i {
-    font-size: 24px; /* Made slightly larger */
+    font-size: 24px;
+    /* Made slightly larger */
     margin: 0 12px;
     cursor: pointer;
     transition: 0.3s;
@@ -591,17 +684,22 @@ form input:focus {
 
 .socials i:hover {
     color: #40e0d0;
-    transform: translateY(-3px); /* Adds a little pop effect */
+    transform: translateY(-3px);
+    /* Adds a little pop effect */
 }
+
 /* Add this to your main CSS file */
 .developers-container {
     display: flex;
-    justify-content: space-around; /* Distributes the two developer sections */
-    gap: 30px; /* Space between the columns */
+    justify-content: space-around;
+    /* Distributes the two developer sections */
+    gap: 30px;
+    /* Space between the columns */
     padding: 15px 0;
     width: 80%;
     margin: 0 auto;
-    border-top: 1px solid #ccc; /* Optional separator */
+    border-top: 1px solid #ccc;
+    /* Optional separator */
     border-bottom: 1px solid #ccc;
 }
 

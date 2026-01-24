@@ -60,7 +60,7 @@ class Course(Resource):
         return result, 200
             
     def delete(self, id):
-        course = Course.query.get_or_404(id)
+        course = CourseModel.query.get_or_404(id)
         db.session.delete(course)
         db.session.commit()
         return {'message': 'Course deleted'}, 204

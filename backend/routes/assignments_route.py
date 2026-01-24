@@ -79,7 +79,7 @@ class Assignment(Resource):
         return {'message': 'Assignment updated'}, 200
 
     def delete(self, id):
-        assignment = Assignment.query.get_or_404(id)
+        assignment = AssignmentModel.query.get_or_404(id)
         db.session.delete(assignment)
         db.session.commit()
         return {'message': 'Assignment deleted'}, 204

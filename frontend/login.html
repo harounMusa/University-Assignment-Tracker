@@ -9,19 +9,57 @@
     <div class="auth-container">
         <div class="auth-card">
             <div class="logo-placeholder">
-                <img src="C:\Users\user\Pictures\Sudan_University_for_Scince_&_Technology.png" alt="Logo">
+                <img src="./icon/Sudan_University_for_Scince_&_Technology.png" alt="Logo">
             </div>
-            <h2>Welcome Back</h2>
+            <h2>Welcome Leader</h2>
             <form id="login-form">
-                <label>Username</label>
-                <input type="text" id="login-username" required>
-                <label>Password</label>
+                <label>Leaders Password</label>
                 <input type="password" id="login-password" required>
                 <button type="submit" class="auth-btn">Login</button>
             </form>
-            <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+            <p>You are not a leader? go back to main page <a href="index.html">Main Page</a></p>
         </div>
     </div>
-    <script src="./Js/auth.js"></script>
+    <script defer>
+        const API_URL = "http://127.0.0.1:5000";
+
+        // 1. Check status on load - MUST include credentials
+        fetch(`${API_URL}/admin/check`, { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.is_admin) {
+                    window.location.href = 'index.html';
+                }
+            })
+            .catch(err => console.error("Check failed:", err));
+
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('login-password').value;
+            login(password);
+        });
+
+        // 2. Login function
+        async function login(password) {
+            try {
+                const response = await fetch(`${API_URL}/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // CRITICAL
+                    body: JSON.stringify({ password })
+                });
+
+                if (response.ok) {
+                    window.location.href = 'index.html';
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Login failed');
+                }
+            } catch (err) {
+                alert("Server unreachable");
+            }
+}
+    </script>
 </body>
 </html>

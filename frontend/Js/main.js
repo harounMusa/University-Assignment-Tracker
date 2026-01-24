@@ -1,5 +1,5 @@
 // --- Configuration ---
-const API_URL = "https://university-assignment-tracker-c69h.onrender.com";
+const API_URL = "http://127.0.0.1:5000";
 
 // --- DOM Elements ---
 const overlay = document.getElementById("overlay");
@@ -12,7 +12,7 @@ const courseForm = document.getElementById("course-form");
 const assignForm = document.getElementById("assign-form");
 
 // State Variable to track which course we are adding an assignment to
-let currentCourseId = null; 
+let currentCourseId = null;
 
 // --- Event Listeners ---
 if (semesterSelect) {
@@ -36,7 +36,7 @@ document.querySelectorAll('.close-btn, .cancel').forEach(btn => {
 // Handle Course Form Submit
 courseForm.addEventListener("submit", async (e) => {
     e.preventDefault(); // Stop page reload
-    
+
     const courseData = {
         name: document.getElementById("course-name").value,
         semester: document.getElementById("semester").value
@@ -48,7 +48,7 @@ courseForm.addEventListener("submit", async (e) => {
 // Handle Assignment Form Submit
 assignForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
+
     if (!currentCourseId) return alert("Error: No course selected");
 
     // Format dates to ISO string for Python (YYYY-MM-DD)
@@ -59,7 +59,7 @@ assignForm.addEventListener("submit", async (e) => {
         course_id: currentCourseId,
         title: document.getElementById("assign-name").value,
         description: document.getElementById("assign-description").value,
-        start_date: startDateInput, 
+        start_date: startDateInput,
         due_date: dueDateInput
     };
 
@@ -74,9 +74,9 @@ window.onload = () => {
 // Helper to refresh the board based on semester
 async function loadData(semester = null) {
     cardsContainer.innerHTML = ''; // Clear the UI
-    
+
     // We must await courses first, so the cards exist before we try to put assignments in them
-    await fetchCourses(semester); 
+    await fetchCourses(semester);
     await fetchAssignments();
 }
 
@@ -89,9 +89,9 @@ async function fetchCourses(semester = null) {
             url += `?semester=${semester}`;
         }
 
-        const res = await fetch(url);
+        const res = await fetch(url, { credentials: 'include' });
         const courses = await res.json();
-        
+
         if (courses.length === 0) {
             cardsContainer.innerHTML = '<p style="text-align:center; width:100%; margin-top:20px;">No courses found for this semester.</p>';
         } else {
@@ -105,9 +105,9 @@ async function fetchCourses(semester = null) {
 // 3. Fetch and Render Assignments
 async function fetchAssignments() {
     try {
-        const res = await fetch(`${API_URL}/assignments`);
+        const res = await fetch(`${API_URL}/assignments`, { credentials: 'include' });
         const assignments = await res.json();
-        
+
         assignments.forEach(assign => {
             renderAssignment(assign);
         });
@@ -122,7 +122,8 @@ async function createCourse(data) {
         const res = await fetch(`${API_URL}/courses`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
 
         if (res.ok) {
@@ -143,7 +144,8 @@ async function createAssignment(data) {
         const res = await fetch(`${API_URL}/assignments`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
 
         if (res.ok) {
@@ -161,10 +163,10 @@ async function createAssignment(data) {
 
 // 6. Delete Course
 async function deleteCourse(id, cardElement) {
-    if(!confirm("Delete this course and all its assignments?")) return;
+    if (!confirm("Delete this course and all its assignments?")) return;
 
     try {
-        const res = await fetch(`${API_URL}/course/${id}`, { method: "DELETE" });
+        const res = await fetch(`${API_URL}/course/${id}`, { method: "DELETE", credentials: 'include' });
         if (res.ok) {
             cardElement.remove();
         }
@@ -173,16 +175,15 @@ async function deleteCourse(id, cardElement) {
 
 // 7. Delete Assignment
 async function deleteAssignment(id, assignElement) {
-    if(!confirm("Delete this assignment?")) return;
+    if (!confirm("Delete this assignment?")) return;
 
     try {
-        const res = await fetch(`${API_URL}/assignments/${id}`, { method: "DELETE" });
+        const res = await fetch(`${API_URL}/assignments/${id}`, { method: "DELETE", credentials: 'include' });
         if (res.ok) {
             assignElement.remove();
         }
     } catch (err) { console.error(err); }
 }
-
 
 // --- UI Rendering Helper Functions ---
 
@@ -190,7 +191,7 @@ function renderCourse(course) {
     const courseCard = document.createElement("div");
     courseCard.className = 'card';
     // IMPORTANT: Store the ID in the HTML so we can find it later
-    courseCard.dataset.id = course.id; 
+    courseCard.dataset.id = course.id;
 
     courseCard.innerHTML = `
         <div class="card-head">
@@ -200,10 +201,10 @@ function renderCourse(course) {
                     <small style="font-size: 12px; color: #777;">Semester: ${course.semester}</small>
                 </h2>
             </div>
-            <i class="fa-solid fa-trash delete-course-btn" style="cursor:pointer; color: #ff6b6b;"></i>
+            <i class="fa-solid fa-trash delete-course-btn admin-only" style="cursor:pointer; color: #ff6b6b;"></i>
         </div>
         <div class="assignments-container"></div>
-        <button class="add-assign-btn">+ Add Assignment</button>
+        <button class="add-assign-btn admin-only">+ Add Assignment</button>
     `;
 
     // Add Event Listener for "Add Assignment" button on this specific card
@@ -224,30 +225,30 @@ function renderCourse(course) {
 function renderAssignment(assign) {
     // Find the course card that matches the course_id
     const courseCard = document.querySelector(`.card[data-id='${assign.course_id}']`);
-    
+
     // SAFETY CHECK: If we filtered the courses (e.g. showing Sem 1), 
     // but this assignment belongs to Sem 2, courseCard will be null.
     // We simply return and don't render it.
-    if (!courseCard) return; 
+    if (!courseCard) return;
 
     const container = courseCard.querySelector(".assignments-container");
     const assignEl = document.createElement("div");
-    
+
     // ... (Rest of your renderAssignment logic remains exactly the same) ...
     assignEl.className = "assignment";
-    
+
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     const dueDate = new Date(assign.due_date);
     dueDate.setHours(0, 0, 0, 0);
 
     let bgColor = "";
     if (today.getTime() > dueDate.getTime()) {
-        bgColor = "#f8b2b2ff"; 
+        bgColor = "#f8b2b2ff";
     } else if (today.getTime() === dueDate.getTime()) {
-        bgColor = "#f7e8b5ff"; 
+        bgColor = "#f7e8b5ff";
     } else {
-        bgColor = "#afffcbff"; 
+        bgColor = "#afffcbff";
     }
 
     assignEl.style.backgroundColor = bgColor;
@@ -263,7 +264,7 @@ function renderAssignment(assign) {
                 <span>Due: ${assign.due_date}</span>
             </div>
         </div>
-        <i class="fa-solid fa-trash delete-assign-btn" style="cursor:pointer; color: #ff6b6b; margin-left:10px;"></i>
+        <i class="fa-solid fa-trash delete-assign-btn admin-only" style="cursor:pointer; color: #ff6b6b; margin-left:10px;"></i>
     `;
 
     assignEl.querySelector(".delete-assign-btn").addEventListener("click", () => {
