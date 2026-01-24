@@ -1,5 +1,5 @@
 // --- Configuration ---
-const API_URL = "http://127.0.0.1:5000";
+const API_URL = "https://university-assignment-tracker-c69h.onrender.com";
 
 // --- DOM Elements ---
 const overlay = document.getElementById("overlay");
@@ -72,7 +72,7 @@ window.onload = () => {
 };
 
 // Helper to refresh the board based on semester
-async function loadData(semester = null) {
+async function loadData(semester = 1) {
     cardsContainer.innerHTML = ''; // Clear the UI
 
     // We must await courses first, so the cards exist before we try to put assignments in them

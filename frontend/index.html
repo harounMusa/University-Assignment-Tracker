@@ -20,7 +20,7 @@
         <div class="nav-links">
             <span id="welcome-msg">Hello, Student</span>
             <select id="semester-select" class="semester-dropdown">
-                <option value="" disabled selected>Select Semester</option>
+                <option value="" disabled >Select Semester</option>
                 <option value="1" selected>Semester 1</option>
                 <option value="2">Semester 2</option>
                 <option value="3">Semester 3</option>
@@ -31,7 +31,7 @@
                 <option value="8">Semester 8</option>
             </select>
             <button onclick="logout()" id="logout-btn" class="logout-btn">Logout</button>
-            <button onclick="window.location.href = 'login.html'" id="login-btn" class="login-btn">Login</button>
+            <button onclick="window.location.href = 'login.html'" id="login-btn" class="login-btn hidden">Login</button>
         </div>
     </nav>
 
@@ -51,7 +51,7 @@
                 <input name="name" required type="text" id="course-name" placeholder="e.g., Computer Science">
 
                 <label for="semester">Semester</label>
-                <input name="semester" required type="number" id="semester" placeholder="e.g., 3">
+                <input name="semester" min="1" max="8" required type="number" id="semester" placeholder="e.g., 3">
 
                 <div class="btns">
                     <button type="button" class="cancel">Cancel</button>
@@ -125,8 +125,7 @@
     </footer>
     <script src="./Js/main.js" defer></script>
     <script>
-        // API_URL is already defined in main.js
-        API_URL = "http://127.0.0.1:5000";
+        API_URL = "https://university-assignment-tracker-c69h.onrender.com";
 
 
     async function checkAdminStatus() {
@@ -138,10 +137,8 @@
         const loginBtn = document.getElementById('login-btn');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // 1. Handle Body Class
         document.body.classList.toggle('admin', isAdmin);
 
-        // 2. Handle Button Visibility
         if (isAdmin) {
             loginBtn.classList.add('hidden');
             logoutBtn.classList.remove('hidden');
@@ -152,7 +149,6 @@
             console.log('Logged in as Student');
         }
 
-        // 3. Update Welcome Message (Optional but nice)
         const welcomeMsg = document.getElementById('welcome-msg');
         if (welcomeMsg) {
             welcomeMsg.textContent = isAdmin ? "Hello, Admin" : "Hello, Student";
@@ -160,12 +156,9 @@
 
     } catch (error) {
         console.error("Auth check failed:", error);
-        // Fallback: assume guest if the server is down
         document.body.classList.remove('admin');
     }
 }
-
-        // Call the function
         checkAdminStatus();
 
         function logout() {

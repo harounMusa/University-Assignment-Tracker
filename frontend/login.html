@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Uni Tracker</title>
     <link rel="stylesheet" href="./Css/style.css">
 </head>
@@ -21,7 +22,7 @@
         </div>
     </div>
     <script defer>
-        const API_URL = "http://127.0.0.1:5000";
+        const API_URL = "https://university-assignment-tracker-c69h.onrender.com";
 
         // 1. Check status on load - MUST include credentials
         fetch(`${API_URL}/admin/check`, { credentials: 'include' })
