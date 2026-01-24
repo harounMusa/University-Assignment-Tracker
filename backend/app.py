@@ -9,7 +9,7 @@ from routes.assignments_route import Assignments, Assignment
 from routes.auth_routes import AdminLogin, AdminCheck, AdminLogout
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "https://assignments-tracker.onrender.com"}}, supports_credentials=True)
 # Session Cookie Security for local development
 app.config.update(
     SESSION_COOKIE_SAMESITE=None, 
