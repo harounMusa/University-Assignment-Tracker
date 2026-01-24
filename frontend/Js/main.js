@@ -1,5 +1,5 @@
 // --- Configuration ---
-const API_URL = "https://university-assignment-tracker-c69h.onrender.com";
+const API_URL = "https://university-assignment-tracker.onrender.com";
 
 // --- DOM Elements ---
 const overlay = document.getElementById("overlay");
