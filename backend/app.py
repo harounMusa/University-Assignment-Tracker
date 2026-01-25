@@ -12,9 +12,9 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://assignments-tracker.onrender.com"}}, supports_credentials=True)
 # Session Cookie Security for local development
 app.config.update(
-    SESSION_COOKIE_SAMESITE=None, 
+    SESSION_COOKIE_SAMESITE= None, # Set to 'None' if using HTTPS and different domains
     SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SECURE=True,  
+    SESSION_COOKIE_SECURE=True,   # Set to True only if using HTTPS
 )
 app.config.from_object(config)
 api = Api(app)
