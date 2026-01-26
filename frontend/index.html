@@ -30,8 +30,8 @@
                 <option value="7">Semester 7</option>
                 <option value="8">Semester 8</option>
             </select>
-            <button onclick="logout()" id="logout-btn" class="logout-btn">Logout</button>
             <button onclick="window.location.href = 'login.html'" id="login-btn" class="login-btn hidden">Login</button>
+            <button onclick="logout()" id="logout-btn" class="logout-btn">Logout</button>
         </div>
     </nav>
 
@@ -89,40 +89,40 @@
         <button class="add-course admin-only">+ Add Course</button>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
+<footer class="footer">
+    <div class="footer-container">
+        <div class="uni-branding">
             <img src="icon/Sudan_University_for_Scince_&_Technology.png" alt="Sudan Uni Logo">
-            <p>Sudan University for Science and Technology</p>
+            <p class="uni-name">Sudan University for Science and Technology</p>
+        </div>
 
-            <div class="developers-container">
-                <div class="developer-info">
-                    <h3>Front-End Developer: Ibrahim 🧑‍💻</h3>
-                    <div class="socials">
-                        <a href="https://github.com/harounMusa" target="_blank" title="Ibrahim's GitHub"><i
-                                class="fa-brands fa-github"></i></a>
-                        <a href="[FRONTEND_TWITTER_LINK]" target="_blank" title="Ibrahim's Twitter"><i
-                                class="fa-brands fa-twitter"></i></a>
-                        <a href="[FRONTEND_LINKEDIN_LINK]" target="_blank" title="Ibrahim's LinkedIn"><i
-                                class="fa-brands fa-linkedin"></i></a>
-                    </div>
-                </div>
-
-                <div class="developer-info">
-                    <h3>Back-End Developer: Haroun Musa ⚙️</h3>
-                    <div class="socials">
-                        <a href="https://github.com/harounMusa" target="_blank" title="Haroun's GitHub"><i
-                                class="fa-brands fa-github"></i></a>
-                        <a href="https://x.com/harounnasreldin" target="_blank" title="Haroun's Twitter"><i
-                                class="fa-brands fa-twitter"></i></a>
-                        <a href="https://www.linkedin.com/in/haroun-musa-1096702b5/" target="_blank"
-                            title="Haroun's LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    </div>
+        <h4 class="dev-title">Meet the Developers</h4>
+        
+        <div class="developers-grid">
+            <div class="developer-card">
+                <h3>Ibrahim Abdelrahman</h3>
+                <div class="social-links">
+                    <a href="https://github.com/harounMusa" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
                 </div>
             </div>
 
-            <p class="copyright">© 2025 University Tracker. All rights reserved.</p>
+            <div class="developer-card">
+                <h3>Haroun Musa</h3>
+                <div class="social-links">
+                    <a href="https://github.com/harounMusa" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://x.com/harounnasreldin" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/haroun-musa-1096702b5/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
         </div>
-    </footer>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 University Tracker. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
     <script src="./Js/main.js" defer></script>
     <script>
         API_URL = "https://university-assignment-tracker.onrender.com";
